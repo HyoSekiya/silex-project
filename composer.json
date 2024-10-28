@@ -1,2 +1,6 @@
 {
-"require" : {"" : "<デフォルト>"}}
+  "require": {
+    "silex/silex": "^2.3",
+    "pimple/pimple": "^3.0"
+  }
+}
