@@ -1,4 +1,4 @@
-phpのversion
+## phpのversion
 ```
 hyo@HyonoMac-mini silexpro % php -v
 PHP 7.4.33 (cli) (built: Sep 27 2024 12:56:02) ( NTS )
@@ -8,7 +8,7 @@ Zend Engine v3.4.0, Copyright (c) Zend Technologies
 
 ```
 
-composerのversion
+## composerのversion
 ```
 hyo@HyonoMac-mini silexpro % composer -v
    ______
@@ -20,3 +20,7 @@ hyo@HyonoMac-mini silexpro % composer -v
 Composer version 2.2.24 2024-06-10 22:51:52
 
 ```
+
+## php実行コマンド
+`php -S localhost:8080/`
+※/以降は任意のパスを入れる
