@@ -24,3 +24,6 @@ Composer version 2.2.24 2024-06-10 22:51:52
 ## php実行コマンド
 `php -S localhost:8080/`
 ※/以降は任意のパスを入れる
+
+## CURLコマンド（POST）
+curl -X POST -H "Content-Type: application/json" -d '{"message":"hello"}' http://localhost:8080/
