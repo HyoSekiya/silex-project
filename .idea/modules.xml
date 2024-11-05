@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/silexpro.iml" filepath="$PROJECT_DIR$/silexpro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/silex_project.iml" filepath="$PROJECT_DIR$/silex_project.iml" />
     </modules>
   </component>
 </project>

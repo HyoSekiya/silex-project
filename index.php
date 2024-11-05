@@ -1,40 +1,59 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
+use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-use Pimple\Container;
+// silexインスタンス生成
+$app = new Application();
 
-$app = new Silex\Application();
+// デバッグモードをON（デフォルトはfalseだった）
+$app['debug'] = true;
 
-// 入力ページ
-$app->get('/', function () {
-    return '
-        <h1>Input Form</h1>
-        <form action="/hello/name" method="POST">
-            <label for="name">Enter your name:</label>
-            <input type="text" id="name" name="name" required>
-            <button type="submit">Submit</button>
-        </form>
-    ';
+/**
+ * トンネル（method:POST, MIME:application/json）
+ */
+$app->post('/tunnel', function (Request $request) use ($app) {
+    $body = $request->request->all();
+
+    if (isset($body['message'])) {
+        $message = $body['message'];
+        $response = ['message' => 'Hello ' . $message];
+    } else {
+        $response = [
+            'error' => true,
+            'message' => 'The "message" key is missing in the request body.'
+        ];
+    }
+
+    return $app->json($response);
 });
 
-// フォームデータを処理するページ
-$app->post('/hello/name', function () use ($app) {
-    // PHPのスーパーグローバル $_POST を使用してデータを取得
-    $name = isset($_POST['name']) ? $_POST['name'] : 'Guest';
-
-    // リダイレクトして、GETリクエストで名前をURIに埋め込む
-    return $app->redirect("/hello/name/$name");
+/**
+ * テスト用(method:GET)
+ */
+$app->get('/get', function () use ($app){
+    return $app->json(['name'=> 'taro']);
 });
 
-// 名前を表示するページ
-$app->get('/hello/name/{name}', function ($name) use ($app) {
-    return '<h1>Hello, ' . htmlspecialchars($name) . '!</h1>';
+/**
+ * テスト用(method:POST)
+ */
+$app->post('/post', function (Request $request) use ($app) {
+
+    $body = json_decode($request->getContent(), true); // associativeがtureだと返されるオブジェクトは連想配列形式になるらしい。
+    if (isset($body['name'])) {
+        $message = $body['name'];
+        return new JsonResponse(['result' => 'ok', 'name' => $body['name']]);
+    } else {
+        return new JsonResponse(['result' => 'ng']);
+    }
 });
 
-// エラーハンドリング
-$app->error(function (\Exception $e, $code) {
-    return '<h1>Error ' . $code . '</h1><p>' . $e->getMessage() . '</p>';
-});
 
-// サーバーを起動
-$app->run();
+try {
+    $app->run();
+} catch (Exception $e) {
+    error_log('エラー吐いた。' . $e->getMessage());
+}
