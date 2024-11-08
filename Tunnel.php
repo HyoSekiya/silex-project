@@ -67,43 +67,6 @@ $app->patch('/TUNNEL', function (Request $request) use ($app) {
     return $app->json([$method, $header, $path, $body]);
 });
 
-/**
- * PUT
- */
-$app->put('/TUNNEL', function (Request $request) use ($app) {
-
-    // リクエストのmethodを取得
-    $method = $request->getMethod();
-
-    // リクエストのheaderを全部取得
-    $header = $request->headers->all();
-
-    // リクエストのパスを取得
-    $path = $request->getPathInfo();
-
-    // リクエストボディを取得
-    $body = $request->getContent();
-
-    return $app->json([$method, $header, $path, $body]);
-});
-
-/**
- * DELETE
- */
-$app->delete('/TUNNEL', function (Request $request) use ($app) {
-
-    // リクエストのmethodを取得
-    $method = $request->getMethod();
-
-    // リクエストのheaderを全部取得
-    $header = $request->headers->all();
-
-    // リクエストのパスを取得
-    $path = $request->getPathInfo();
-
-    return $app->json([$method, $header, $path]);
-});
-
 try {
     $app->run();
 } catch (Exception $e) {
